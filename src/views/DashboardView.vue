@@ -3,7 +3,7 @@
     <h1 class="project-title">Resumo do Projeto</h1>
 
     <section class="project-features">
-      <h2>1. Cadastro de Pessoas, Produtos e Pedidos:</h2>
+      <h2>1. Cadastro de Pessoas e Produtos</h2>
       <ul>
         <li>Listagem e filtragem de registros.</li>
         <li>Adição de novos registros.</li>
@@ -19,7 +19,7 @@
         <li>Validação de CPF.</li>
         <li>
           Mensagens de erro amigáveis ao usuário em caso de falha no servidor,
-          com o uso de SweetAlert2.
+          com o uso de <b>SweetAlert2</b>.
         </li>
       </ul>
     </section>
@@ -43,6 +43,15 @@
           O layout foi projetado para funcionar bem em dispositivos móveis e
           desktops.
         </li>
+      </ul>
+    </section>
+
+    <section class="project-tools">
+      <h2>5. Informações e instruções: </h2>
+      <ul>
+        <li>O cadastro do pedido não está pronto.</li>
+        <li>Testes automatizados não foram implementados devido a restrições de tempo.</li>
+        <li>As instruções de como rodar o projeto estão na pasta README.md</li>
       </ul>
     </section>
   </div>

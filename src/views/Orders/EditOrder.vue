@@ -16,7 +16,7 @@ import { ref } from "vue";
 import { onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import { IPerson } from "@/interface/people";
+import { IOrder } from "@/interface/order";
 import FormOrder from "@/components/FormOrder.vue";
 import Swal from "sweetalert2";
 
@@ -24,15 +24,20 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
-const formData = ref<IPerson>({ nome: "", cpf: "", dataNascimento: "" });
+const formData = ref<IOrder>({ 
+  cliente: "",
+  dataEmissao: "",
+  valorTotal: 0,
+  itens: [], 
+});
 
 const updatePerson = async () => {
   await store.dispatch("people/editPerson", formData.value);
   router.push("/");
 };
 
-const fetchPersonData = async (personId: number) => {
-  const person = store.getters["people/getPersonById"](personId);
+const fetchPersonData = async (orderId: number) => {
+  const person = store.getters["people/getPersonById"](orderId);
   await Swal.fire({
     icon: "success",
     title: "Sucesso!",

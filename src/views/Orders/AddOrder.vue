@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { IOrder } from "@/interface/order";
+import { IOrder } from "@/interface/orders";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import FormOrder from "@/components/FormOrder.vue";
@@ -20,13 +20,14 @@ const router = useRouter();
 
 const formData: IOrder = {
   id: 0,
-  nome: "",
-  cpf: "",
-  dataNascimento: "",
+  cliente: "",
+  dataEmissao: "",
+  valorTotal: 0,
+  itens: [],
 };
 
 const addOrder = async () => {
-  await store.dispatch("order/addOrder", formData);
+  await store.dispatch("pedidos/adicionarPedido", formData);
   router.push("/lista-pedido");
 };
 </script>
