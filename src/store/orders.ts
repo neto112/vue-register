@@ -1,10 +1,12 @@
 // pedidosModule.ts
 import { Commit } from 'vuex';
-import { IOrdersState, IOrder } from '@/interface/orders';
+import { IOrdersState, IOrder, ICustomer, IProduct } from '@/interface/orders';
 import api from '@/api';
 
 const state: IOrdersState = {
   pedidos: [],
+  clientes: [],
+  produtos: [],
 };
 
 const mutations = {
@@ -67,12 +69,17 @@ const actions = {
     }
   },
 };
+// const getters = {
+//   listOrders: (state: IOrder[]) => state.pedidos,
+//   getOrderById: (state) => (pedidoId: number) => state.pedidos.find((pedido) => pedido.id === pedidoId)
+// }
 
 const pedidosModule = {
   namespaced: true,
   state,
   mutations,
   actions,
+  // getters
 };
 
 export default pedidosModule;

@@ -150,10 +150,10 @@ const closeDetails = () => {
 
 const filterOrders = () => {
   listOfOrders.value = store.state.pedidos.pedidos.filter((order) => {
-       const matchesDataEmissao =
+    const matchesDataEmissao =
       !filterDataEmissao.value ||
       isSameDay(
-        parse(order.dataEmissao, 'yyyy-MM-dd', new Date()),
+        parse(order.dataEmissao, "yyyy-MM-dd", new Date()),
         filterDataEmissao.value
       );
 
@@ -171,6 +171,10 @@ watch([filterDataEmissao, filterValorTotal], () => {
 
 const addOrder = () => {
   router.push("/adicionar-pedido");
+};
+
+const editOrder = (orderId: number) => {
+  router.push({ name: "editar-pedido", params: { id: orderId } });
 };
 
 const deleteOrder = async (orderId: number) => {
@@ -227,11 +231,6 @@ onMounted(async () => {
 .filter-text,
 .filter-picker {
   width: 30%;
-}
-
-.button-container {
-  display: flex;
-  justify-content: flex-end;
 }
 
 .add-button {

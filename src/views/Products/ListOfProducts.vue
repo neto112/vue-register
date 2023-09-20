@@ -149,11 +149,6 @@ onMounted(() => {
   width: 30%;
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .add-button {
   background-color: #007bff;
   color: white;

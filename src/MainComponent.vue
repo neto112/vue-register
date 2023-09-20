@@ -241,11 +241,6 @@ const handleProduct = () => {
   background-color: #f0f0f0;
 }
 
-.custom-drawer-list {
-  list-style: none;
-  padding: 0;
-}
-
 .custom-link {
   text-decoration: none;
   color: #333333;
@@ -257,12 +252,6 @@ const handleProduct = () => {
 
 .custom-link:hover {
   background: #f0f0f0;
-}
-
-.custom-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
 }
 
 .custom-link-text {

@@ -20,14 +20,14 @@ const router = useRouter();
 
 const formData: IOrder = {
   id: 0,
-  cliente: "",
+  cliente: { id: 0, nome: "" },
   dataEmissao: "",
   valorTotal: 0,
   itens: [],
 };
 
 const addOrder = async () => {
-  await store.dispatch("pedidos/adicionarPedido", formData);
+  await store.dispatch("pedidos/createOrder", formData);
   router.push("/lista-pedido");
 };
 </script>

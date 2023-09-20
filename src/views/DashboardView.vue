@@ -47,10 +47,13 @@
     </section>
 
     <section class="project-tools">
-      <h2>5. Informações e instruções: </h2>
+      <h2>5. Informações e instruções:</h2>
       <ul>
         <li>O cadastro do pedido não está pronto.</li>
-        <li>Testes automatizados não foram implementados devido a restrições de tempo.</li>
+        <li>
+          Testes automatizados não foram implementados devido a restrições de
+          tempo.
+        </li>
         <li>As instruções de como rodar o projeto estão na pasta README.md</li>
       </ul>
     </section>
@@ -80,15 +83,6 @@
 .project-architecture,
 .project-tools {
   text-align: left;
-}
-
-.feature-item,
-.validation-item,
-.architecture-item,
-.tools-item {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: flex-start;
 }
 
 h2 {

@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve-json": "json-server --watch db.json"
+    "serve-json": "json-server --watch data.json"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^6.1.0",
