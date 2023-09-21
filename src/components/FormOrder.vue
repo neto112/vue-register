@@ -5,25 +5,13 @@
       <h2 class="form-title">{{ formTitle }}</h2>
     </div>
     <form @submit.prevent="submitForm">
-      <div class="form-group" v-for="(cliente, index) in clientes" :key="index">
+      <div class="form-group">
         <label for="clientes">Nome do Cliente:</label>
         <div class="input-container">
-          <span class="input-grid">
-            <input
-              type="text"
-              v-model="cliente.nome"
-              placeholder="Nome do Cliente"
-            />
-            <Plus
-              v-if="index === clientes.length - 1"
-              @click="addCustomer"
-              class="plus-icon"
-            />
-          </span>
-          <Delete
-            v-if="clientes.length > 1"
-            @click="deleteCustomer(index)"
-            class="delete-icon"
+          <input
+            type="text"
+            v-model="formData.cliente.nome"
+            placeholder="Nome do Cliente"
           />
         </div>
       </div>
@@ -32,39 +20,30 @@
         <input type="date" id="dataEmissao" v-model="formData.dataEmissao" />
       </div>
       <div class="form-group">
-        <label for="valorTotal">Valor Total:</label>
-        <input type="number" id="valorTotal" v-model="formData.valorTotal" />
-      </div>
-      <div class="form-group">
         <label for="itens">Itens do Pedido:</label>
-        <div v-for="(item, index) in itens" :key="index">
+        <div v-for="(item, index) in formData.itens" :key="index">
           <div class="input-container">
-            <span class="input-grid">
-              <input
-                type="text"
-                v-model="item.produto.descricao"
-                placeholder="Descrição do Produto"
-              />
-              <Plus
-                v-if="index === itens.length - 1"
-                @click="addItem"
-                class="plus-icon"
-              />
-            </span>
+            <input
+              type="text"
+              v-model="item.produto.descricao"
+              placeholder="Descrição do Produto"
+            />
             <input
               type="number"
-              v-model="item.valor"
+              :value="item.valor !== 0 ? item.valor : false"
+              @input="item.valor = parseFloat($event.target.value)"
               placeholder="Preço do Produto"
             />
             <input
               type="number"
-              v-model="item.quantidade"
+              :value="item.quantidade !== 0 ? item.quantidade : false"
+              @input="item.quantidade = parseInt($event.target.value)"
               placeholder="Quantidade do Produto"
             />
+            <Plus v-if="index === formData.itens.length - 1" @click="addItem" />
             <Delete
-              v-if="itens.length > 1"
+              v-if="formData.itens.length > 1"
               @click="removeItem(index)"
-              class="delete-icon"
             />
           </div>
         </div>
@@ -97,40 +76,47 @@ function goBack() {
   router.go(-1);
 }
 
-const clientes = ref([{ id: "", nome: "" }]);
-const produtos = ref([{ id: "", descricao: "" }]);
-const itens = ref([
-  { id: "", produto: produtos.value, valor: "", quantidade: "" },
-]);
+let lastProductID = ref(1);
+let lastItemID = ref(1);
 
-const formData = ref(
-  props.initialFormData || {
-    cliente: clientes.value,
-    dataEmissao: "",
-    valorTotal: 0,
-    itens: itens.value,
-  }
-);
+function generateItemID() {
+  lastItemID.value += 1;
+  return lastItemID.value;
+}
+
+function generateProductID() {
+  lastProductID.value += 1;
+  return lastProductID.value;
+}
 
 const addItem = () => {
-  itens.value.push({
-    id: "",
-    produto: produtos.value,
+  formData.value.itens.push({
+    id: generateItemID(),
+    produto: { id: generateProductID(), descricao: "" },
     valor: "",
     quantidade: "",
   });
 };
 
+const formData = ref(
+  props.initialFormData || {
+    cliente: { nome: "" },
+    dataEmissao: "",
+    valorTotal: "",
+    itens: [
+      {
+        id: generateItemID(),
+        produto: { id: generateProductID(), descricao: "" },
+        valor: "",
+        quantidade: "",
+        subtotal: "",
+      },
+    ],
+  }
+);
+
 const removeItem = (index: number) => {
-  itens.value.splice(index, 1);
-};
-
-const addCustomer = () => {
-  clientes.value.push({ id: "", nome: "" });
-};
-
-const deleteCustomer = (index: number) => {
-  clientes.value.splice(index, 1);
+  formData.value.itens.splice(index, 1);
 };
 
 const submitForm = () => {
@@ -139,14 +125,6 @@ const submitForm = () => {
       icon: "error",
       title: "Erro!",
       text: "Por favor, preencha a Data de Emissão",
-    });
-    return;
-  }
-  if (formData.value.valorTotal <= 0) {
-    Swal.fire({
-      icon: "error",
-      title: "Erro!",
-      text: "O Valor Total deve ser maior que zero",
     });
     return;
   }

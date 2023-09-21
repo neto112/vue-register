@@ -21,7 +21,7 @@ export interface IItem {
 
 export interface IProduct {
   id?: number;
-  description: string;
+  descricao: string;
 }
 
 export interface IOrdersState {
