@@ -40,7 +40,10 @@
               @input="item.quantidade = parseInt($event.target.value)"
               placeholder="Quantidade do Produto"
             />
-            <Plus v-if="index === formData.itens.length - 1" @click="addItem" />
+            <PlusCircle
+              v-if="index === formData.itens.length - 1"
+              @click="addItem"
+            />
             <Delete
               v-if="formData.itens.length > 1"
               @click="removeItem(index)"
@@ -58,7 +61,6 @@ import { ref, defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
-import Plus from "vue-material-design-icons/Plus.vue";
 import PlusCircle from "vue-material-design-icons/PlusCircle.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 
@@ -170,46 +172,7 @@ const submitForm = () => {
   margin-bottom: 15px;
 }
 
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.input-field {
-  flex-grow: 1;
-  margin-right: 10px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.delete-icon,
-.plus-icon {
-  cursor: pointer;
-  font-size: 20px;
-  color: red;
-  width: 10%;
-}
-
-.plus-icon-customer {
-  position: absolute;
-  top: 20%;
-  cursor: pointer;
-  font-size: 20px;
-  color: red;
-  width: 10%;
-}
-
-.delete-icon {
-  position: absolute;
-  top: 25%;
-  right: 12%;
-  cursor: pointer;
-}
-
 .input-container {
-  position: relative;
   width: 100%;
 }
 
@@ -217,9 +180,13 @@ const submitForm = () => {
   margin: 10px 0px;
 }
 
-.input-grid {
-  display: grid;
-  grid-template-columns: 90% 10%;
-  align-items: center;
+.delete-icon {
+  cursor: pointer;
+  color: green;
+}
+
+.plus-circle-icon {
+  cursor: pointer;
+  color: red;
 }
 </style>

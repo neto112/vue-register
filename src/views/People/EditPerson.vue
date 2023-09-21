@@ -38,6 +38,11 @@ const updatePerson = async () => {
 
 const fetchPersonData = async (personId: number) => {
   const person = store.getters["people/getPersonById"](personId);
+  await Swal.fire({
+    icon: "success",
+    title: "Sucesso!",
+    text: "A pessoa foi atualizada com sucesso.",
+  });
   formData.value = { ...person };
 };
 

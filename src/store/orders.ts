@@ -69,17 +69,18 @@ const actions = {
     }
   },
 };
-// const getters = {
-//   listOrders: (state: IOrder[]) => state.pedidos,
-//   getOrderById: (state) => (pedidoId: number) => state.pedidos.find((pedido) => pedido.id === pedidoId)
-// }
+const getters = {
+  getOrderById: (state: IOrdersState) => (id: number) => {
+    return state.pedidos.find((p) => p.id === id);
+  },
+};
 
 const pedidosModule = {
   namespaced: true,
   state,
   mutations,
   actions,
-  // getters
+  getters
 };
 
 export default pedidosModule;

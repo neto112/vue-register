@@ -58,20 +58,20 @@
           <tr>
             <th>ID do Cliente</th>
             <th>Nome do Cliente</th>
-            <th>Ações</th>
+            <!-- <th>Ações</th> -->
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{{ selectedOrder.cliente.id }}</td>
             <td>{{ selectedOrder.cliente.nome }}</td>
-            <td class="icon-pointer">
+            <!-- <td class="icon-pointer">
               <Pencil class="pencil-color" @click="editCustomer(customer.id)" />
               <Delete
                 class="delete-color"
                 @click="deleteCustomer(customer.id)"
               />
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -85,7 +85,7 @@
             <th>Valor</th>
             <th>Quantidade</th>
             <th>Subtotal</th>
-            <th>Ações</th>
+            <!-- <th>Ações</th> -->
           </tr>
         </thead>
         <tbody>
@@ -95,10 +95,10 @@
             <td>{{ order.valor }}</td>
             <td>{{ order.quantidade }}</td>
             <td>{{ order.subtotal }}</td>
-            <td class="icon-pointer">
+            <!-- <td class="icon-pointer">
               <Pencil class="pencil-color" @click="editItem(item.id)" />
               <Delete class="delete-color" @click="deleteItem(item.id)" />
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -141,7 +141,7 @@ const showDetails = (orderId: number) => {
   selectedOrder.value = listOfOrders.value.find(
     (order) => order.id === orderId
   );
-  showDetailsModal.value = !showDetailsModal.value;
+  showDetailsModal.value = true;
 };
 
 const closeDetails = () => {
@@ -189,7 +189,7 @@ const deleteOrder = async (orderId: number) => {
   });
 
   if (result.isConfirmed) {
-    await store.dispatch("orders/deleteOrder", orderId);
+    await store.dispatch("pedidos/deleteOrder", orderId);
     await fetchOrders();
     Swal.fire("Excluído!", "O Pedido foi excluído com sucesso.", "success");
   }
