@@ -39,21 +39,6 @@ const formData = ref<IOrder>({
 });
 
 const updateOrder = async () => {
-  formData.value.itens.forEach((item) => {
-    if (item.valor !== null && item.quantidade !== null) {
-      item.subtotal = item.valor * item.quantidade;
-    }
-  });
-
-  // Calcular o valor total com base nos subtotais
-  formData.value.valorTotal = formData.value.itens.reduce((total, item) => {
-    if (item.subtotal !== null) {
-      return total + item.subtotal;
-    } else {
-      return total;
-    }
-  }, 0);
-
   await store.dispatch("pedidos/updateOrder", formData.value);
   await Swal.fire({
     icon: "success",

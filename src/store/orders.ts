@@ -1,6 +1,6 @@
 // pedidosModule.ts
 import { Commit } from 'vuex';
-import { IOrdersState, IOrder, ICustomer, IProduct } from '@/interface/orders';
+import { IOrdersState, IOrder } from '@/interface/orders';
 import api from '@/api';
 
 const state: IOrdersState = {
@@ -40,6 +40,21 @@ const actions = {
   },
   async createOrder({ commit }: { commit: Commit }, order: IOrder) {
     try {
+      // SUBTOTAL
+      order.itens.forEach((item) => {
+        if (item.valor !== null && item.quantidade !== null) {
+          item.subtotal = item.valor * item.quantidade
+        }
+      })
+      // VALOR TOTAL
+      order.valorTotal = order.itens.reduce((total, item) => {
+        if (item.subtotal !== null) {
+          return total + item.subtotal
+        } else {
+          return total;
+        }
+      }, 0);
+
       const response = await api.addOrder(order);
       if (response.status === 201) {
         commit('addOrder', response.data);
@@ -50,6 +65,19 @@ const actions = {
   },
   async updateOrder({ commit }: { commit: Commit }, order: IOrder) {
     try {
+      order.itens.forEach((item) => {
+        if (item.valor !== null && item.quantidade !== null) {
+          item.subtotal = item.valor * item.quantidade
+        }
+      })
+      order.valorTotal = order.itens.reduce((total, item) => {
+        if (item.subtotal !== null) {
+          return total + item.subtotal
+        } else {
+          return total;
+        }
+      }, 0);
+
       const response = await api.editOrder(order);
       if (response.status === 200) {
         commit('editOrder', response.data);

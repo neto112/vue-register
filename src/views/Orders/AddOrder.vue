@@ -35,21 +35,6 @@ const formData: IOrder = {
 };
 
 const addOrder = async () => {
-  formData.itens.forEach((item) => {
-    if (item.valor !== null && item.quantidade !== null) {
-      item.subtotal = item.valor * item.quantidade;
-    }
-  });
-
-  // Calcular o valor total com base nos subtotais
-  formData.valorTotal = formData.itens.reduce((total, item) => {
-    if (item.subtotal !== null) {
-      return total + item.subtotal;
-    } else {
-      return total;
-    }
-  }, 0);
-
   await store.dispatch("pedidos/createOrder", formData);
   router.push("/lista-pedido");
 };
