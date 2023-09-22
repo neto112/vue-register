@@ -48,8 +48,8 @@ import { useStore } from "vuex";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { useRouter } from "vue-router";
-import formatPriceValue from "@/utils/useComp";
 import { confirmDelete, showSuccessMessage } from "@/utils/alerts";
+import { formatPriceValue } from "@/utils/formatUtils";
 
 const store = useStore();
 const listOfProducts = ref([]);

@@ -113,15 +113,13 @@ import { useStore } from "vuex";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { useRouter } from "vue-router";
-import useComposable from "@/utils/useComp";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Eye from "vue-material-design-icons/Eye.vue";
 import { parse, isSameDay } from "date-fns";
 import { confirmDelete, showSuccessMessage } from "@/utils/alerts";
 import { IOrder } from "@/interface/orders";
-
-const { formatDayMonthYear, formatPriceValue } = useComposable();
+import { formatDayMonthYear, formatPriceValue } from "@/utils/formatUtils";
 
 const store = useStore();
 const listOfOrders: Ref<IOrder[]> = ref([]);

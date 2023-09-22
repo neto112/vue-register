@@ -52,11 +52,11 @@ import { useStore } from "vuex";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { useRouter } from "vue-router";
-import useComposable from "@/utils/useComp";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { parse, isSameDay } from "date-fns";
 import { confirmDelete, showSuccessMessage } from "@/utils/alerts";
+import { formatDayMonthYear, formatCpf } from "@/utils/formatUtils";
 
 const store = useStore();
 const listOfPeople = ref([]);
@@ -64,7 +64,6 @@ const router = useRouter();
 const filterNameCpf = ref("");
 const filterDataNascimento = ref<Date | null>(null);
 const locale = { lang: "br" };
-const { formatDayMonthYear, formatCpf } = useComposable();
 
 const filterPeople = () => {
   listOfPeople.value = store.state.people.pessoas.filter((pessoa: IPerson) => {

@@ -28,12 +28,11 @@
 
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from "vue";
-import useComposable from "@/utils/useComp";
 import { useRouter } from "vue-router";
 import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
 import { showErrorAlert } from "@/utils/alerts";
+import { validateCPF } from "@/utils/validationUtils";
 
-const { validateCPF } = useComposable();
 const router = useRouter();
 
 const props = defineProps({
