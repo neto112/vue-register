@@ -14,6 +14,7 @@ import { IProduct } from "@/interface/product";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import FormProduct from "@/components/FormProduct.vue";
+import { showSuccessAlert } from "@/utils/alerts";
 
 const store = useStore();
 const router = useRouter();
@@ -26,6 +27,7 @@ const formData: IProduct = {
 
 const addProduto = async () => {
   await store.dispatch("products/addProduct", formData);
+  showSuccessAlert("O produto foi adicionado com sucesso.");
   router.push("/lista-produto");
 };
 </script>

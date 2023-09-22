@@ -18,7 +18,7 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { IProduct } from "@/interface/product";
 import FormProduct from "@/components/FormProduct.vue";
-import Swal from "sweetalert2";
+import { showSuccessAlert } from "@/utils/alerts";
 
 const store = useStore();
 const router = useRouter();
@@ -28,11 +28,7 @@ const formData = ref<IProduct>({ descricao: "", valoUnitario: 0 });
 
 const updateProduct = async () => {
   await store.dispatch("products/editProduct", formData.value);
-  await Swal.fire({
-    icon: "success",
-    title: "Sucesso!",
-    text: "Esse produto foi atualizado com sucesso.",
-  });
+  showSuccessAlert("Esse produto foi atualizado com sucesso.");
   router.push("/lista-produto");
 };
 

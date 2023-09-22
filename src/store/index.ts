@@ -7,7 +7,7 @@ const store = createStore({
   modules: {
     people: peopleModule,
     products: productsModule,
-    pedidos: orderModule
+    orders: orderModule
   }
 })
 

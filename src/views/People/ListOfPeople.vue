@@ -37,7 +37,7 @@
           <td>{{ formatDayMonthYear(person.dataNascimento) }}</td>
           <td class="icon-pointer">
             <Pencil class="pencil-color" @click="editPerson(person.id)" />
-            <Delete class="delete-color" @click="deletePerson(person.id)" />
+            <Delete class="delete-color" @click="deletePerson(person)" />
           </td>
         </tr>
       </tbody>
@@ -52,11 +52,11 @@ import { useStore } from "vuex";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { useRouter } from "vue-router";
-import useComposable from "@/useComp";
-import Swal from "sweetalert2";
+import useComposable from "@/utils/useComp";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { parse, isSameDay } from "date-fns";
+import { confirmDelete, showSuccessMessage } from "@/utils/alerts";
 
 const store = useStore();
 const listOfPeople = ref([]);
@@ -64,6 +64,7 @@ const router = useRouter();
 const filterNameCpf = ref("");
 const filterDataNascimento = ref<Date | null>(null);
 const locale = { lang: "br" };
+const { formatDayMonthYear, formatCpf } = useComposable();
 
 const filterPeople = () => {
   listOfPeople.value = store.state.people.pessoas.filter((pessoa: IPerson) => {
@@ -91,8 +92,6 @@ watch([filterNameCpf, filterDataNascimento], () => {
   filterPeople();
 });
 
-const { formatDayMonthYear, formatCpf } = useComposable();
-
 const addPeople = () => {
   router.push("/adicionar-pessoa");
 };
@@ -101,21 +100,11 @@ const editPerson = (personId: number) => {
   router.push({ name: "editar-pessoa", params: { id: personId } });
 };
 
-const deletePerson = async (personId: number) => {
-  const result = await Swal.fire({
-    title: "Tem certeza que deseja excluir o item?",
-    text: "Esta ação não pode ser desfeita!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sim, excluir!",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#ff0000",
-  });
-
-  if (result.isConfirmed) {
-    await store.dispatch("people/deletePerson", personId);
+const deletePerson = async (person: IPerson) => {
+  if (await confirmDelete(`${person.nome}`)) {
+    await store.dispatch("people/deletePerson", person.id);
     await fetchPeople();
-    Swal.fire("Excluído!", "O item foi excluído com sucesso.", "success");
+    showSuccessMessage(`A pessoa ${person.nome} foi excluída com sucesso.`);
   }
 };
 

@@ -59,10 +59,10 @@
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
-import Swal from "sweetalert2";
 import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
 import PlusCircle from "vue-material-design-icons/PlusCircle.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
+import { showErrorAlert } from "@/utils/alerts";
 
 const router = useRouter();
 
@@ -122,12 +122,24 @@ const removeItem = (index: number) => {
 };
 
 const submitForm = () => {
+  if (!formData.value.cliente.nome) {
+    showErrorAlert("Por favor, preencha o nome do cliente.");
+    return;
+  }
   if (!formData.value.dataEmissao) {
-    Swal.fire({
-      icon: "error",
-      title: "Erro!",
-      text: "Por favor, preencha a Data de Emissão",
-    });
+    showErrorAlert("Por favor, preencha a data de emissão.");
+    return;
+  }
+  if (!formData.value.itens[0].produto.descricao) {
+    showErrorAlert("Por favor, preencha a descrição do produto 1.");
+    return;
+  }
+  if (!formData.value.itens[0].valor) {
+    showErrorAlert("Por favor, preencha o valor do produto 1.");
+    return;
+  }
+  if (!formData.value.itens[0].quantidade) {
+    showErrorAlert("Por favor, preencha a quantidade do produto 1.");
     return;
   }
   emit("submit", formData.value);

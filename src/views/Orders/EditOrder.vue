@@ -18,7 +18,7 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { IOrder } from "@/interface/orders";
 import FormOrder from "@/components/FormOrder.vue";
-import Swal from "sweetalert2";
+import { showSuccessAlert } from "@/utils/alerts";
 
 const store = useStore();
 const router = useRouter();
@@ -39,22 +39,18 @@ const formData = ref<IOrder>({
 });
 
 const updateOrder = async () => {
-  await store.dispatch("pedidos/updateOrder", formData.value);
-  await Swal.fire({
-    icon: "success",
-    title: "Sucesso!",
-    text: "O pedido foi atualizado com sucesso.",
-  });
+  await store.dispatch("orders/updateOrder", formData.value);
+  showSuccessAlert("O pedido foi atualizado com sucesso.");
   router.push("/lista-pedido");
 };
 
 const fetchOrderData = async (orderId: number) => {
-  const order = store.getters["pedidos/getOrderById"](orderId);
+  const order = store.getters["orders/getOrderById"](orderId);
   formData.value = { ...order };
 };
 
 onMounted(async () => {
-  const personId = Number(route.params.id);
-  await fetchOrderData(personId);
+  const orderId = Number(route.params.id);
+  await fetchOrderData(orderId);
 });
 </script>

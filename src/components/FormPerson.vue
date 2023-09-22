@@ -28,10 +28,10 @@
 
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from "vue";
-import useComposable from "@/useComp";
+import useComposable from "@/utils/useComp";
 import { useRouter } from "vue-router";
-import Swal from "sweetalert2";
 import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
+import { showErrorAlert } from "@/utils/alerts";
 
 const { validateCPF } = useComposable();
 const router = useRouter();
@@ -54,19 +54,11 @@ const formData = ref(
 
 const submitForm = () => {
   if (!formData.value.nome) {
-    Swal.fire({
-      icon: "error",
-      title: "Erro!",
-      text: "Por favor, preencha o campo de Nome",
-    });
+    showErrorAlert("Por favor, preencha o campo de Nome.");
     return;
   }
   if (!validateCPF(formData.value.cpf)) {
-    Swal.fire({
-      icon: "error",
-      title: "Erro!",
-      text: "CPF inválido. Por favor, verifique o CPF.",
-    });
+    showErrorAlert("CPF inválido. Por favor, verifique o CPF.");
     return;
   }
   emit("submit", formData.value);

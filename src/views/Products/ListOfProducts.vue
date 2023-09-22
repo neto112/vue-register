@@ -30,10 +30,10 @@
       <tbody>
         <tr v-for="product in listOfProducts" :key="product.id">
           <td>{{ product.descricao }}</td>
-          <td>R$ {{ formatPriceValue(product.valoUnitario) }}</td>
+          <td>{{ formatPriceValue(product.valoUnitario) }}</td>
           <td class="icon-pointer">
             <Pencil class="pencil-color" @click="editProduct(product.id)" />
-            <Delete class="delete-color" @click="deleteProduct(product.id)" />
+            <Delete class="delete-color" @click="deleteProduct(product)" />
           </td>
         </tr>
       </tbody>
@@ -48,15 +48,14 @@ import { useStore } from "vuex";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { useRouter } from "vue-router";
-import Swal from "sweetalert2";
-import useComposable from "@/useComp";
+import formatPriceValue from "@/utils/useComp";
+import { confirmDelete, showSuccessMessage } from "@/utils/alerts";
 
 const store = useStore();
 const listOfProducts = ref([]);
 const router = useRouter();
 const filterProductDescription = ref("");
 const filterProductPrice = ref<string>("");
-const { formatPriceValue } = useComposable();
 
 const filterProducts = () => {
   listOfProducts.value = store.state.products.products.filter(
@@ -86,21 +85,13 @@ const editProduct = (productId: number) => {
   router.push({ name: "editar-produto", params: { id: productId } });
 };
 
-const deleteProduct = async (productId: number) => {
-  const result = await Swal.fire({
-    title: "Tem certeza que deseja excluir o produto?",
-    text: "Esta ação não pode ser desfeita!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sim, excluir!",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#ff0000",
-  });
-
-  if (result.isConfirmed) {
-    await store.dispatch("products/deleteProduct", productId);
+const deleteProduct = async (product: IProduct) => {
+  if (await confirmDelete(`${product.descricao}`)) {
+    await store.dispatch("products/deleteProduct", product.id);
     await fetchProducts();
-    Swal.fire("Excluído!", "O produto foi excluído com sucesso.", "success");
+    showSuccessMessage(
+      `O produto ${product.descricao} foi excluído com sucesso.`
+    );
   }
 };
 

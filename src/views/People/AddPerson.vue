@@ -14,7 +14,7 @@ import { IPerson } from "@/interface/people";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import FormPerson from "@/components/FormPerson.vue";
-import Swal from "sweetalert2";
+import { showSuccessAlert } from "@/utils/alerts";
 
 const store = useStore();
 const router = useRouter();
@@ -28,11 +28,7 @@ const formData: IPerson = {
 
 const addPessoa = async () => {
   await store.dispatch("people/addPerson", formData);
-  Swal.fire({
-    icon: "success",
-    title: "Sucesso!",
-    text: "A pessoa foi adicionada com sucesso.",
-  });
+  showSuccessAlert("A pessoa foi adicionada com sucesso.");
   router.push("/lista-pessoa");
 };
 </script>

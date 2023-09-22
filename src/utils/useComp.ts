@@ -7,6 +7,7 @@ export default function useComposable() {
       const zonedDate = utcToZonedTime(date, 'UTC');
       return format(zonedDate, 'dd/MM/yyyy');
     }
+    return ""
   }
 
   function formatCpf(value: string) {
@@ -66,12 +67,12 @@ export default function useComposable() {
 
   function formatPriceValue(value: number, locale = "pt-BR") {
     if (typeof value === "number") {
-      return value.toLocaleString(locale, {
+      return `R$ ${value.toLocaleString(locale, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      });
+      })}`
     } else {
-      return "0,00";
+      return "R$ 0,00";
     }
   }
 

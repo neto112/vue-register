@@ -37,7 +37,7 @@
           <td>{{ order.id }}</td>
           <td>{{ order.cliente.nome }}</td>
           <td>{{ formatDayMonthYear(order.dataEmissao) }}</td>
-          <td>R$ {{ formatPriceValue(order.valorTotal) }}</td>
+          <td>{{ formatPriceValue(order.valorTotal) }}</td>
           <td class="icon-pointer">
             <Eye
               class="eye-color"
@@ -45,7 +45,7 @@
               @click="showDetails(order.id)"
             />
             <Pencil class="pencil-color" @click="editOrder(order.id)" />
-            <Delete class="delete-color" @click="deleteOrder(order.id)" />
+            <Delete class="delete-color" @click="deleteOrder(order)" />
           </td>
         </tr>
       </tbody>
@@ -108,40 +108,42 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, Ref, ref, watch } from "vue";
 import { useStore } from "vuex";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { useRouter } from "vue-router";
-import useComposable from "@/useComp";
-import Swal from "sweetalert2";
+import useComposable from "@/utils/useComp";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Eye from "vue-material-design-icons/Eye.vue";
 import { parse, isSameDay } from "date-fns";
+import { confirmDelete, showSuccessMessage } from "@/utils/alerts";
+import { IOrder } from "@/interface/orders";
 
 const { formatDayMonthYear, formatPriceValue } = useComposable();
 
 const store = useStore();
-const listOfOrders = ref([]);
+const listOfOrders: Ref<IOrder[]> = ref([]);
 
 const router = useRouter();
-const filterDataEmissao = ref("");
+const filterDataEmissao = ref<number | null>(null);
 const filterValorTotal = ref("");
 const locale = { lang: "br" };
 const showDetailsModal = ref(false);
-const selectedOrder = ref(null);
+const selectedOrder: Ref<IOrder | null> = ref(null);
 
 const fetchOrders = async () => {
-  await store.dispatch("pedidos/fetchPedidos");
-  listOfOrders.value = store.state.pedidos.pedidos;
+  await store.dispatch("orders/fetchPedidos");
+  listOfOrders.value = store.state.orders.pedidos;
 };
 
 const showDetails = (orderId: number) => {
-  selectedOrder.value = listOfOrders.value.find(
-    (order) => order.id === orderId
-  );
-  showDetailsModal.value = true;
+  const foundOrder = listOfOrders.value.find((order) => order.id === orderId);
+  if (foundOrder) {
+    selectedOrder.value = foundOrder;
+    showDetailsModal.value = true;
+  }
 };
 
 const closeDetails = () => {
@@ -149,7 +151,7 @@ const closeDetails = () => {
 };
 
 const filterOrders = () => {
-  listOfOrders.value = store.state.pedidos.pedidos.filter((order) => {
+  listOfOrders.value = store.state.orders.pedidos.filter((order: IOrder) => {
     const matchesDataEmissao =
       !filterDataEmissao.value ||
       isSameDay(
@@ -177,21 +179,13 @@ const editOrder = (orderId: number) => {
   router.push({ name: "editar-pedido", params: { id: orderId } });
 };
 
-const deleteOrder = async (orderId: number) => {
-  const result = await Swal.fire({
-    title: "Tem certeza que deseja excluir o Pedido?",
-    text: "Esta ação não pode ser desfeita!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sim, excluir!",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#ff0000",
-  });
-
-  if (result.isConfirmed) {
-    await store.dispatch("pedidos/deleteOrder", orderId);
+const deleteOrder = async (order: IOrder) => {
+  if (await confirmDelete(`${order.cliente.nome}`)) {
+    await store.dispatch("orders/deleteOrder", order.id);
     await fetchOrders();
-    Swal.fire("Excluído!", "O Pedido foi excluído com sucesso.", "success");
+    showSuccessMessage(
+      `O pedido ${order.cliente.nome} foi excluído com sucesso.`
+    );
   }
 };
 

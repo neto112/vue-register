@@ -25,8 +25,8 @@
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
-import Swal from "sweetalert2";
 import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
+import { showErrorAlert } from "@/utils/alerts";
 
 const router = useRouter();
 
@@ -48,19 +48,11 @@ const formData = ref(
 
 const submitForm = () => {
   if (!formData.value.descricao) {
-    Swal.fire({
-      icon: "error",
-      title: "Erro!",
-      text: "Por favor, preencha o campo de Descrição",
-    });
+    showErrorAlert("Por favor, preencha o campo de Descrição");
     return;
   }
   if (formData.value.valoUnitario <= 0) {
-    Swal.fire({
-      icon: "error",
-      title: "Erro!",
-      text: "O Valor Unitário deve ser maior que zero",
-    });
+    showErrorAlert("O valor unitário deve ser maior que zero");
     return;
   }
   emit("submit", formData.value);

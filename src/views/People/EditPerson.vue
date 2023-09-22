@@ -18,7 +18,7 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { IPerson } from "@/interface/people";
 import FormPerson from "@/components/FormPerson.vue";
-import Swal from "sweetalert2";
+import { showSuccessAlert } from "@/utils/alerts";
 
 const store = useStore();
 const router = useRouter();
@@ -28,21 +28,12 @@ const formData = ref<IPerson>({ nome: "", cpf: "", dataNascimento: "" });
 
 const updatePerson = async () => {
   await store.dispatch("people/editPerson", formData.value);
-  await Swal.fire({
-    icon: "success",
-    title: "Sucesso!",
-    text: "Essa pessoa foi atualizada com sucesso.",
-  });
+  showSuccessAlert("Essa pessoa foi atualizada com sucesso.");
   router.push("/lista-pessoa");
 };
 
 const fetchPersonData = async (personId: number) => {
   const person = store.getters["people/getPersonById"](personId);
-  await Swal.fire({
-    icon: "success",
-    title: "Sucesso!",
-    text: "A pessoa foi atualizada com sucesso.",
-  });
   formData.value = { ...person };
 };
 

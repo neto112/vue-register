@@ -14,6 +14,7 @@ import { IOrder } from "@/interface/orders";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import FormOrder from "@/components/FormOrder.vue";
+import { showSuccessAlert } from "@/utils/alerts";
 
 const store = useStore();
 const router = useRouter();
@@ -35,7 +36,8 @@ const formData: IOrder = {
 };
 
 const addOrder = async () => {
-  await store.dispatch("pedidos/createOrder", formData);
+  await store.dispatch("orders/createOrder", formData);
+  showSuccessAlert("O pedido foi adicionado com sucesso.");
   router.push("/lista-pedido");
 };
 </script>
