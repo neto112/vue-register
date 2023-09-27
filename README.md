@@ -1,20 +1,31 @@
 # vue-register
 
-## Instalar as Dependências Iniciais
-
+## Project setup
+```
 npm install
+```
 
-## Executar o Projeto
-```
-npm run serve
-```
-## Configurar a API FAKE com json-server
+## Run the FAKE API with json-server
 
-Para rodar o serviço, é necessário instalar o json-server no terminal Visual Code Studio:
-```
-npm install -g json-server
-```
-Após isso, rodar o comando:
 ```
 json-server --watch data.json
 ```
+
+### Compiles and hot-realods for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
