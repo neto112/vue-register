@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="header">
-      <ArrowLeft @click="goBack" class="arrow-icon" />
+      <font-awesome-icon
+        :icon="['fas', 'arrow-circle-left']"
+        @click="goBack"
+        class="arrow-icon"
+        size="xl"
+      />
       <h2 class="form-title">{{ formTitle }}</h2>
     </div>
     <form @submit.prevent="submitForm">
@@ -40,13 +45,19 @@
               @input="item.quantidade = parseInt($event.target.value)"
               placeholder="Quantidade do Produto"
             />
-            <PlusCircle
+            <font-awesome-icon
+              class="plus-circle-icon"
+              icon="plus-circle"
               v-if="index === formData.itens.length - 1"
               @click="addItem"
+              size="xl"
             />
-            <Delete
+            <font-awesome-icon
+              class="delete-icon"
+              icon="trash"
               v-if="formData.itens.length > 1"
               @click="removeItem(index)"
+              size="xl"
             />
           </div>
         </div>
@@ -59,7 +70,6 @@
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
-import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
 import PlusCircle from "vue-material-design-icons/PlusCircle.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import { showErrorAlert } from "@/utils/alerts";

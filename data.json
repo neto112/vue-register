@@ -2,7 +2,7 @@
   "pessoas": [
     {
       "id": 1,
-      "nome": "clientee222e 1",
+      "nome": "Cliente 1",
       "cpf": "433.267.110-42",
       "dataNascimento": "1999-12-31"
     },
@@ -35,6 +35,30 @@
       "nome": "123",
       "cpf": "08181459946",
       "dataNascimento": "2023-09-06"
+    },
+    {
+      "id": 7,
+      "nome": "Teste swal",
+      "cpf": "08181459946",
+      "dataNascimento": "2023-09-03"
+    },
+    {
+      "id": 8,
+      "nome": "Teste swal",
+      "cpf": "08181459946",
+      "dataNascimento": "2023-09-03"
+    },
+    {
+      "id": 9,
+      "nome": "teste",
+      "cpf": "54348927987",
+      "dataNascimento": "2023-09-21"
+    },
+    {
+      "id": 10,
+      "nome": "teste",
+      "cpf": "54348927987",
+      "dataNascimento": ""
     }
   ],
   "produtos": [
@@ -50,7 +74,7 @@
     },
     {
       "descricao": "produto 3",
-      "valoUnitario": 10,
+      "valoUnitario": 100,
       "id": 4
     },
     {
@@ -82,7 +106,7 @@
         "nome": "cliente 1"
       },
       "dataEmissao": "2019-01-01",
-      "valorTotal": 76.64,
+      "valorTotal": 560,
       "itens": [
         {
           "id": 1,
@@ -90,9 +114,9 @@
             "id": 1,
             "descricao": "produto 1"
           },
-          "valor": 10,
-          "quantidade": 5,
-          "subtotal": 50
+          "valor": 100,
+          "quantidade": 4,
+          "subtotal": 400
         },
         {
           "id": 2,
@@ -100,9 +124,40 @@
             "id": 2,
             "descricao": "produto 2"
           },
-          "valor": 8.88,
+          "valor": 80,
+          "quantidade": 2,
+          "subtotal": 160
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "cliente": {
+        "id": 1,
+        "nome": "Cristiano"
+      },
+      "dataEmissao": "2023-09-22",
+      "valorTotal": 1200,
+      "itens": [
+        {
+          "id": 0,
+          "produto": {
+            "id": 1,
+            "descricao": "Produto 1"
+          },
+          "valor": 200,
           "quantidade": 3,
-          "subtotal": 26.64
+          "subtotal": 600
+        },
+        {
+          "id": 2,
+          "produto": {
+            "id": 2,
+            "descricao": "Produto 30"
+          },
+          "valor": 300000,
+          "quantidade": 2000,
+          "subtotal": 600
         }
       ]
     }

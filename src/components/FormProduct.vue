@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="header">
-      <ArrowLeft @click="goBack" class="arrow-icon" />
+      <font-awesome-icon
+        :icon="['fas', 'arrow-circle-left']"
+        @click="goBack"
+        class="arrow-icon"
+        size="xl"
+      />
       <h2 class="form-title">{{ formTitle }}</h2>
     </div>
     <form @submit.prevent="submitForm">
@@ -25,7 +30,6 @@
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
-import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
 import { showErrorAlert } from "@/utils/alerts";
 
 const router = useRouter();

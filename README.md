@@ -6,9 +6,13 @@ npm install
 ```
 
 ## Run the FAKE API with json-server
-
 ```
 json-server --watch data.json
+```
+
+## Run the test unit
+```
+npm run test:unit
 ```
 
 ### Compiles and hot-realods for development
